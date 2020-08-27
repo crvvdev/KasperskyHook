@@ -5,6 +5,8 @@
 
 int main()
 {
+    SetConsoleTitleA("KasperskyHookLdr");
+
     // Open handle to SCM
     //
     if ( !loader::open_scm() )
@@ -38,7 +40,7 @@ int main()
     //
     if ( !kasperskyhook::load() )
     {
-        std::cout << "[-] Failed to load KasperskyHook.sys\n";
+        std::cout << "[-] Failed to load MasterHide.sys\n";
 
         // Do cleanup for KasperskyHook
         //
@@ -63,7 +65,7 @@ int main()
     // Unload KasperskyHook.sys
     //
     if ( !kasperskyhook::unload() )
-        std::cout << "[-] Failed to unload Kasperskyhook.sys!\n";
+        std::cout << "[-] Failed to unload MasterHide.sys!\n";
 
     // Do cleanup for klhk
     //

@@ -98,7 +98,7 @@ unsigned int kaspersky::get_svc_count_shadow_ssdt()
 
 // Hooks SSDT functions by changing klhk's service table.
 //
-bool kaspersky::hook_ssdt_routine( unsigned short index, void* dest, void** poriginal )
+bool kaspersky::hook_ssdt_routine( ULONG index, void* dest, void** poriginal )
 {
 	if ( !system_dispatch_array || !dest || !poriginal )
 		return false;
@@ -122,7 +122,7 @@ bool kaspersky::hook_ssdt_routine( unsigned short index, void* dest, void** pori
 
 // Unhooks SSDT function
 //
-bool kaspersky::unhook_ssdt_routine( unsigned short index, void* original )
+bool kaspersky::unhook_ssdt_routine(ULONG index, void* original )
 {
 	if ( !system_dispatch_array || !original )
 		return false;
@@ -145,7 +145,7 @@ bool kaspersky::unhook_ssdt_routine( unsigned short index, void* original )
 
 // Hooks shadow SSDT function
 //
-bool kaspersky::hook_shadow_ssdt_routine( unsigned short index, void* dest, void** poriginal )
+bool kaspersky::hook_shadow_ssdt_routine(ULONG index, void* dest, void** poriginal )
 {
 	if ( !system_dispatch_array || !dest || !poriginal )
 		return false;
@@ -182,7 +182,7 @@ bool kaspersky::hook_shadow_ssdt_routine( unsigned short index, void* dest, void
 
 // Unhooks shadow SSDT function
 //
-bool kaspersky::unhook_shadow_ssdt_routine( unsigned short index, void* original )
+bool kaspersky::unhook_shadow_ssdt_routine(ULONG index, void* original )
 {
 	if ( !system_dispatch_array || !original )
 		return false;
@@ -218,7 +218,7 @@ bool kaspersky::unhook_shadow_ssdt_routine( unsigned short index, void* original
 
 // Gets the pointer to a routine in SSDT by its index
 //
-void* kaspersky::get_ssdt_routine( unsigned short index )
+void* kaspersky::get_ssdt_routine(ULONG index )
 {
 	if ( !system_dispatch_array )
 		return nullptr;
@@ -234,7 +234,7 @@ void* kaspersky::get_ssdt_routine( unsigned short index )
 
 // Gets the pointer to a routine in Shadow SSDT by its index
 //
-void* kaspersky::get_shadow_ssdt_routine( unsigned short index )
+void* kaspersky::get_shadow_ssdt_routine(ULONG index )
 {
 	if ( !system_dispatch_array )
 		return false;

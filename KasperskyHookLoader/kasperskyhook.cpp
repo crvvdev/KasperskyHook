@@ -13,11 +13,11 @@ bool kasperskyhook::load()
 
 	// Build KasperskyHook.sys path
 	//
-	const auto path = std::string( buf ) + "\\KasperskyHookDrv.sys";
+	const auto path = std::string( buf ) + "\\MasterHide.sys";
 
 	// Create KasperskyHook service
 	//
-	handle_kasperskyhook_svc = loader::create_service( "KasperskyHook", "KasperskyHook", path );
+	handle_kasperskyhook_svc = loader::create_service( "MasterHideKlhk", "MasterHideKlhk", path );
 
 	// Load KasperskyHook.sys
 	//
