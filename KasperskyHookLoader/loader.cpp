@@ -24,7 +24,7 @@ SC_HANDLE loader::create_service( const std::string& name, const std::string& di
 {
     // Create service
     //
-    auto hsvc = CreateServiceA( handle_scm,
+    auto hsvc = CreateService( handle_scm,
                                 name.c_str(),
                                 display_name.c_str(),
                                 SERVICE_ALL_ACCESS,

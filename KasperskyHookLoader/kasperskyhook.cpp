@@ -1,8 +1,9 @@
 #include "kasperskyhook.hpp"
+#include <iostream>
 
 SC_HANDLE handle_kasperskyhook_svc = nullptr;
 
-// Loads KasperskyHook.sys
+// Loads MasterHide.sys
 //
 bool kasperskyhook::load()
 {
@@ -11,26 +12,34 @@ bool kasperskyhook::load()
 	char buf[ MAX_PATH ]{ };
 	GetCurrentDirectoryA( sizeof( buf ), buf );
 
-	// Build KasperskyHook.sys path
+	// Build MasterHide.sys path
 	//
 	const auto path = std::string( buf ) + "\\MasterHide.sys";
 
-	// Create KasperskyHook service
-	//
-	handle_kasperskyhook_svc = loader::create_service( "MasterHideKlhk", "MasterHideKlhk", path );
+	// Check if file is there lol
+    //
+	if ( GetFileAttributesA( path.c_str() ) == INVALID_FILE_ATTRIBUTES )
+	{
+		std::cout << "MasterHide.sys not found on the current directory." << std::endl;
+		return false;
+	}
 
-	// Load KasperskyHook.sys
+	// Create MasterHide service
+	//
+	handle_kasperskyhook_svc = loader::create_service( "MasterHide", "MasterHide", path );
+
+	// Load MasterHide.sys
 	//
 	return handle_kasperskyhook_svc ? loader::start_service( handle_kasperskyhook_svc ) : false;
 }
 
-// Unloads KasperskyHook.sys
+// Unloads MasterHide.sys
 //
 bool kasperskyhook::unload()
 {
 	SERVICE_STATUS svc_status { };
 
-	// Unload KasperskyHook.sys
+	// Unload MasterHide.sys
 	//
 	bool success = loader::stop_service( handle_kasperskyhook_svc, &svc_status );
 
@@ -39,7 +48,7 @@ bool kasperskyhook::unload()
 	if ( !success && GetLastError() == ERROR_SERVICE_NOT_ACTIVE )
 		success = true;
 
-	// Delete KasperskyHook service
+	// Delete MasterHide service
 	//
 	return success ? loader::delete_service( handle_kasperskyhook_svc ) : false;
 }

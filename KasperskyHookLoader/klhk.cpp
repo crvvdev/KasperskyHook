@@ -1,4 +1,5 @@
 #include "klhk.hpp"
+#include <iostream>
 
 SC_HANDLE handle_klhk_svc = nullptr;
 HKEY      hparameters_key = nullptr;
@@ -16,16 +17,32 @@ bool klhk::load()
     //
     const auto path = std::string( buf ) + "\\klhk.sys";
 
+    // Check if file is there lol
+    //
+    if ( GetFileAttributesA( path.c_str() ) == INVALID_FILE_ATTRIBUTES )
+    {
+        std::cout << "klhk.sys not found on the current directory." << std::endl;
+        return false;
+    }
+
+    // Move file to System32\\drivers
+    //
+    char sys32[ MAX_PATH ]{ };
+    GetSystemDirectoryA( sys32, sizeof( sys32 ) );
+    strcat_s( sys32, "\\drivers\\klhk.sys" );
+
+    std::cout << sys32 << "\n";
+
+    CopyFileA( path.c_str(), sys32, TRUE );
+
 	// Create klhk service
 	//
-	handle_klhk_svc = loader::create_service( "klhk", 
-                                                  "Kaspersky Lab service driver", 
-                                                   path );
+	handle_klhk_svc = loader::create_service( "klhk", "Kaspersky Lab service driver", sys32 );
 
 	// Failed to create service
 	//
-	if ( !handle_klhk_svc )
-		return false;
+    if ( !handle_klhk_svc )
+        return false;
 
     // Create Parameters subkey
     //
